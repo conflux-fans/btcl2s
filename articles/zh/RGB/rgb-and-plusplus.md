@@ -194,7 +194,7 @@ RGB称这一问题的解决方案为[proof of publication](https://blackpaper.rg
 
 ### 概述与愿景
 
-RGB++由Nervos CKB的Cipher提出。Nervos CKB 是一条基于UTXO模型（CKB中称之为Cell）的公链。RGB++ 是一个基于 RGB 的扩展协议，它通过同构绑定将比特币 UTXO 映射到 Nervos CKB 的 Cell 上，并利用 CKB 链和 Bitcoin 链上的脚本约束来验证状态计算的正确性和变更所有权的有效性。RGB++ 希望解决原 RGB 协议在实际落地中的技术问题，将客户端的工作转由 CKB 链承担。
+RGB++由Nervos CKB的Cipher提出。Nervos CKB 是一条基于UTXO模型（CKB中称之为Cell）的公链。RGB++ 是一个基于 RGB 的扩展协议，它通过将RGB的UTXO所有权 映射到 Nervos CKB 的 Cell 上，并利用 CKB 链和 Bitcoin 链上的脚本约束来验证状态计算的正确性和变更所有权的有效性。RGB++ 希望解决原 RGB 协议在实际落地中的技术问题，将客户端的工作转由 CKB 链承担。
 
 ### 协议速览
 
@@ -318,7 +318,7 @@ RGB++中为了增强合约的表达能力，引入了global-state cell，RGB++�
 
 ![alt text](image-2.png)
 
-而白皮书中提出的Intent Cell方法并不足以解决这个问题。Intent Cell能保证的是提交到CKB的交易能通过验证，但却无法确保A与B都能被即时提交到CKB链上。（这也是先承诺后公开的一类方案需要考虑的重点）。在原始RGB方案中，只要客户端的正确构造了状态转换与承诺，合约就能够顺利运作，而RGB++中，在比特币上先提交的承诺的有效性却反过来被CKB控制了，为RGB引入global-state cell这一设计很有可能从安全性的角度不是一个好想法。
+而白皮书中提出的Intent Cell方法并不足以解决这个问题。Intent Cell能保证的是提交到CKB的交易能执行，但却无法保证A与B的执行结果与预期一致。在原始RGB方案中，只要客户端的正确构造了状态转换与承诺，合约就能按照预期输出结果。而RGB++中，在比特币上先提交的承诺的有效性却反过来被CKB控制了，使得原有协议的Layer1安全性被降级。为RGB引入global-state cell这一设计很有可能从安全性的角度不是一个好想法。
 
 ### 相关资源
 
