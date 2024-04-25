@@ -10,6 +10,8 @@ BEVM 的核心技术架构被名为为 `Taproot Consensus`, 它包括比特币 T
 
 BEVM 的目标是实现 BTC 扩容，为比特币资产发行，去中心化金融应用发展提供可能，从而促进比特币生态的发展. BEVM 长远还规划了 ZK-STARK Ultra Light Nodes, BEVM Stack, DBFX Protocol 等技术方向.
 
+BEVM 主网已于 2024 年三月底上线。
+
 ## 协议简介
 
 ### BEVM 技术架构
@@ -22,7 +24,7 @@ BEVM 将自身的核心技术架构命名为 `Taproot Consensus`, 它采用了�
 
 概括而言 BEVM 整体由 `跨链桥` + `PoS 共识的 EVM 侧链`组成.
 
-![](../imgs/bevm/bevm-arc.png)
+![](../imgs/bevm-arc.png)
 
 ### 跨链桥
 
@@ -30,7 +32,7 @@ BEVM 将自身的核心技术架构命名为 `Taproot Consensus`, 它采用了�
 
 BEVM 采用 Taproot 升级带来的新技术 Musig2 和 MAST 实现多签账户，官方宣称其最大支持 1000 个参与方，每个参与方都是 BEVM 网络的 PoS 共识节点（非个人或实体），通过这种方式 BEVM 的跨连桥实现了更高程度的去中心化。
 
-![](../imgs/bevm/threshold-sig.png)
+![](../imgs/threshold-sig.png)
 
 具体而言每个 PoS 共识节点都有一个专门用于 BTC 网络的私钥，每个私钥在 BTC 网络上都有一个公钥，利用 Schnorr 签名的特性，任意的多个公钥可以通过 Musig2 算法生成一个多签地址，然后叠加 MAST 技术可以实现 m-n 多签。
 
@@ -99,8 +101,6 @@ BEVM 的前身是 `ChainX`, 该团队从 2017 开始探索 `BTC 扩容项目`, C
 2. 使用 BTC 支付 Gas 费: 为比特币赋予更多的使用场景
 3. 采用更加去中心化的跨链方案: 采用 Taproot 升级带来的新特性
 
-改进后的项目被重新命名为 `BEVM`, 从 2023 年开始研发和推进. 经历了测试网和 Canary 网络的测试，主网已于 2024 年三月底正式上线.
-
 ### Taproot Upgrade
 
 Taproot 是比特币继隔离见证之后的又一重大软分叉升级, 该升级于 2021 年 9 月份生效，主要包含三个BIPs:
@@ -111,7 +111,7 @@ Taproot 是比特币继隔离见证之后的又一重大软分叉升级, 该升�
 
 Taproot 的升级为比特币带来多项改进，包括更高的隐私性，更高的效率，以及更多的扩展性. 其中很重要的一个应用是 `Taproot 门限签名`。
 
-![](../imgs/bevm/mast-threshold.png)
+![](../imgs/mast-threshold.png)
 
 ## 总结
 
