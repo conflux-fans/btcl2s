@@ -34,23 +34,53 @@ SatoshiVM 链由三个层组成：
   - 执行用户提交给SatoshiVM排序器和L1桥接脚本的交易，然后生成L2区块。
 - Rollup节点负责
   - 处理批量交易，发布交易数据和区块信息到比特币网络以确保数据可用性。
-  - 向比特币网络提交有效性证明以进行最终性验证。
+  - 定期向比特币链提交状态承诺（L2 的 state root），代表着在第2层完成大量链下交易执行并达到新状态。
+  - 向比特币网络提交 ZK 有效性证明相关承诺 以进行最终性验证，以 BTC 主网上的 Taproot UTXO 的形式发布。
 
 证明层：
 - 包括协调器、证明者池和验证者。
 - 协调器分配证明任务给证明者池，并将生成的证明传递给Rollup节点。
 - 证明者池负责生成验证L2交易正确性的有效性证明，然后传递回协调者。
-  - 证明者生成两笔有效性证明相关的Taproot交易（参考 BitVM 方案）
-    - 用于验证发布的 Preimage Commitment 的脚本，称为 bit commitments Taproot
-    - 用于验证公开披露的执行轨迹是否正确的脚本，称为 verification Taproot
+  - 证明者生成两笔有效性证明相关的承诺（参考 BitVM 方案）
+    - 用于验证发布的 Preimage Commitment 的脚本的承诺 (对应于Rollup 节点发布到 BTC 主网的 bit commitments Taproot UTXO) <!--，称为 bit commitments Taproot -->
+    - 用于验证公开披露的执行轨迹是否正确的脚本的承诺 (对应于Rollup 节点发布到 BTC 主网的 verification Taproot UTXO) <!--，，称为 verification 承诺 -->
 
 ## 信任和安全
 
 SatoshiVM使用ZK Rollup技术将多个交易捆绑成一个批次，并在比特币主网上作为单个交易进行验证。这保证了与比特币主网络相同级别的安全性、数据有效性和可用性。
 
-ZK Rollup 还使用零知识证明来验证链下计算的正确性，而不会透露细节。
+SatoshiVM的Sequencer使用私有内存池，SatoshiVM不会公开交易池中的交易数据。不公开交易池中的交易数据会导致缺乏透明度、公平性和可审计性,增加了审查、欺诈和系统不确定性的风险。SatoshiVM 通过如下方案减轻了该问题：
+- ZK Rollup 还使用零知识证明来验证链下计算的正确性，而不会透露细节。
+- SatoshiVM 支持用户直接发送相应格式的到交易到 L1 实现抗审查性。
 
-SatoshiVM 支持用户直接发送相应格式的到交易到 L1 实现抗审查性。
+SatoshiVM的Sequencer是中心化的，所以存在单点故障问题。
+
+### Rollup节点可用性
+对于Rollup节点同步交易数据并生成状态承诺,SatoshiVM设计了两种主要方式来保证节点的可用性:
+
+Rollup节点之间建立P2P网络,可以相互请求并同步来自Sequencer的最新交易批次数据,提高了数据的可得性。
+如果被Sequencer或其他节点隔离,Rollup节点也可以直接从比特币链上获取Sequencer定期发布的交易数据,绕过隔离恢复同步能力。
+
+作为Rollup节点中的特殊角色,Proposer节点在完成数据同步后,将执行交易批次计算并生成新的状态承诺,最终由Proposer将该承诺数据上传至比特币链上,实现链下计算的最终结果在链上的公开可验证性。通过上述设计,即使在极端情况下被隔离,Rollup节点和Proposer仍可保持其基本的数据可用性和状态承诺提交能力。
+
+### 资金安全
+SatoshiVM 使用 DHC托管方案 来托管资产，DHC托管架构虽然利用了诸如ZKP、MPC和TEE等先进密码技术。但仍存在密钥管理失控、单点故障、协议漏洞及系统可扩展性等多重潜在风险挑战。
+<!-- 
+### 私有内存池
+SatoshiVM的Sequencer使用私有内存池，SatoshiVM不会公开交易池中的交易数据。不公开交易池中的交易数据会导致缺乏透明度、公平性和可审计性,增加了审查、欺诈和系统不确定性的风险。但通过 ZK证明的方式 和 发送交易到 L1 的方式 大大降低了这些风险。 -->
+
+<!-- 
+不公开交易池中的交易数据会带来一些潜在的问题和风险:
+- 审查和审查阻碍： 由于交易池是私有的,Sequencer可以选择性地包括或排除某些交易,导致审查和审查阻碍的风险。用户无法验证自己的交易是否被公平对待和及时处理。
+- 缺乏公开可审计性：公开的交易池可以让所有人查看等待处理的交易,提高了系统运行的透明度和可审计性。私有交易池则缺乏这种公开透明性,可能增加人们对系统的不信任感。
+- 缺乏资源优先级管理：在公开交易池中,用户可以通过支付更高的手续费来获得更高的优先级。但在私有交易池中,Sequencer可以任意决定优先顺序,没有经济激励机制约束。
+- 交易顺序可预测性差：由于看不到等待处理的交易,难以预测自己交易的处理顺序。这可能导致一些应用程序(如机器人交易等)缺乏确定性。
+- 无法检查交易是否丢失：用户无法验证自己提交的交易是否被接收到交易池中,也无法检测交易是否遗漏处理。这给系统的可靠性带来一定隐患。
+
+总的来说,不公开交易池会增加系统的不透明性,降低公众监督和可审计性,给用户的公平性和系统的安全性带来一定风险。开放透明的交易池虽然会增加一些运营成本,但有利于提高系统的公信力。 -->
+
+
+
 
 ## 协议细节
 
@@ -65,7 +95,7 @@ BitVM的详细介绍可以参看[BitVM白皮书](https://bitvm.org/bitvm.pdf)
 
 在 Arbitrum 的交互式防欺诈协议中，争议方进行多轮通信，以不断细分特定的交易指令，直到他们定位有争议的操作码。然后，该操作码及其输入和输出结果直接在以太坊区块链上执行以进行验证。此过程确定哪一方的声明是正确的，并惩罚恶意方。
 
-在BitVM 方案中，由于比特币脚本的简单性，无法像在以太坊第 2 层解决方案中那样直接验证 EVM 操作码。因此，采用了另一种方法：从任何高级语言编译的操作码再次解码为逻辑门电路的形式。然后，使用Bitcoin Script来模拟这些逻辑门电路的操作。这允许间接模拟虚拟机操作码（例如EVM的操作码）对比特币区块链的操作影响。
+而在BitVM 方案中，由于比特币脚本的简单性，无法像在以太坊第 2 层解决方案中那样直接验证 EVM 操作码。因此，采用了另一种方法：从任何高级语言编译的操作码再次解码为逻辑门电路的形式。然后，使用Bitcoin Script来模拟这些逻辑门电路的操作。这允许间接模拟虚拟机操作码（例如EVM的操作码）对比特币区块链的操作影响。
 
 从编译原理的角度去理解BitVM方案，它是把 `EVM / WASM / Javascript` 操作码，转译为Bitcoin Script的操作码，逻辑门电路作为 “EVM 操作码 ——> Bitcoin Script操作码” 两者之间的一种中间形态（IR）。
 
@@ -85,12 +115,19 @@ BitVM的详细介绍可以参看[BitVM白皮书](https://bitvm.org/bitvm.pdf)
 
 ![alt text](image-3.png)
 
+实现如下：
+![alt text](image-11.png)
 
+##### 逻辑门承诺
+
+任何可计算的函数都可以表示为布尔电路。NAND 门是一种通用逻辑门，因此任何布尔函数都可以由它们组成。NAND 门承诺包含两个表示两个输入的位承诺和一个表示输出的位承诺，脚本计算两个输入的 NAND 值，以确保它与承诺的输出位匹配。
+
+![alt text](image-10.png)
 
 
 ##### 二进制电路承诺
 
-bitvm 将 逻辑门电路承诺 Merkel 化，然后将 Merkel Root 称为 Binary Circuit Commitment。
+bitvm 将 逻辑门承诺 Merkel 化，然后将 Merkel Root 称为 Binary Circuit Commitment。
 
 假如有二进制电路如下：
 ![alt text](image-4.png)
@@ -100,7 +137,7 @@ bitvm 将 逻辑门电路承诺 Merkel 化，然后将 Merkel Root 称为 Binary
 
 #### 挑战与响应
 
-bitvm 将 位值承诺树 Root 发布为 Bit Commitments Taproot 交易, 将 二进制电路承诺 发布为 Binary Circuit Commitment Taproot 交易。
+bitvm 将 位值承诺树 Root 发布为 Bit Commitments Taproot UTXO, 将 二进制电路承诺 发布为 Binary Circuit Commitment Taproot UTXO。
 
 <!-- 挑战者在要求证明者出示证明时，证明者只需要出示 数据片段 + Merkle Proof /Branch 即可。这种可以极大程度压缩 上链 的数据量，且能保证 上链 数据真的存在于MAST树上。而且，仅在BTC链上公开小部分数据片段+Merkle Proof，而不是公开所有数据，能起到很好的隐私保护效果。 -->
 
@@ -111,7 +148,7 @@ bitvm 将 位值承诺树 Root 发布为 Bit Commitments Taproot 交易, 将 二
 ### SataoshiVM 电路
 SataoshiVM 基于 BitVM方案。SatoshiVM 采用 Bristol format 来表达其逻辑门电路结构。
 
-BitVM 中的 Binary Circuit Commitment 在 SatoshiVM 中称为 verification taproot
+BitVM 中的 Binary Circuit Commitment Taproot 在 SatoshiVM 中称为 verification taproot
 
 ![alt text](image-7.png)
 
@@ -134,10 +171,6 @@ alpha 主网通过动态隐藏委员会 （DHC）托管资产， DHC 基于 ZKP�
 - 在包含该提现交易的 Layer2 区块最终确认后，用户在 Layer1 上提交提现证明，请求从公有账户中提取等量的资产。
 - 等待提款挑战期结束（可能需要几个小时）。
 
-
-
-
-
 <!-- ## 疑问
 1. 前像承诺
 前像承诺中给出的例子如下，文中说到通过 “hash of value” 和 "hash of output" 就可以隐藏原值，但是对于门电路，输入输出只有 0 跟 1 两种值，所以不能达到隐藏原值的效果。这里想要表达的应该是 BitVM 中提到的 Bit commitment 中的 preimage
@@ -145,8 +178,22 @@ alpha 主网通过动态隐藏委员会 （DHC）托管资产， DHC 基于 ZKP�
 
 1.  -->
 
-## 挑战
+## 优缺点
+
+### 优点
+验证阶段采用了非交互式验证方式，使得比 bitvm 验证时间更短；
+> 实现难度？是否更安全？
+
+### 缺点（或挑战）
+
+#### DA层
 [官方文档](https://docs.satoshivm.io/satoshivm/layer2-overview/architecture/mainnet) 中表示 主网会将 BTC 链作为 DA层，这在以太坊 L2解决方案中也没有先例，将 BTC 链作为 DA 层将导致 L2的 TPS 的上限不会大于 L1；而且会付出昂贵的 GAS 成本，也就失去了L2的意义，不知是否官方没有表述清楚。
+
+- 其中Rollup 节点的可用性依赖于从 BTC 网络获取交易数据
+
+#### 中心化排序器
+
+SatoshiVM的Sequencer是中心化的，所以存在单点故障问题。
 
 ## 参考文档
 - [SatoshiVM白皮书](https://github.com/SatoshiVM/whitepaper)
