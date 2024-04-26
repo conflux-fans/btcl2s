@@ -6,7 +6,7 @@ This series of articles delves into various Bitcoin Scaling Solutions, providing
 
 ## **Overview**
 
-Stacks is a protocol that introduces smart contracts and decentralized applications (DApps) to Bitcoin without altering its protocol. It operates as a layer-2 solution on Bitcoin, leveraging Bitcoin's security and combining it with advanced scripting capabilities.
+Stacks is a protocol that introduces smart contracts and decentralized applications (DApps) to Bitcoin without altering its protocol. It operates as a layer-2 solution on Bitcoin, leveraging Bitcoin's security and combining it with scripting capabilities.
 
 Stacks addresses the limited functionality of Bitcoin, which does not natively support complex smart contracts or DApps. It aims to unlock Bitcoin's potential as a programmable base layer, enhancing its utility beyond just a digital currency.
 
@@ -22,13 +22,13 @@ Every Stacks block is tethered to a Bitcoin transaction; a hash of the Stacks bl
 
 The Stacks blockchain distinguishes itself from other Bitcoin Scaling Solutions with some key differentiators:
 
-- **Clarity Smart Contract Language**: Stacks introduces Clarity, a decidable, not Turing complete, smart contract language. Decidability is a significant property in Clarity, which means that the outcomes of executing any given smart contract can be known before actually running them on the blockchain. This is crucial for developers and businesses that need to guarantee the behavior of their applications in all circumstances. Clarity is designed to avoid common pitfalls in smart contract programming such as reentrancy attacks and unpredictable gas fees, which are prevalent in other blockchain ecosystems.
+- **Clarity Smart Contract Language**: Stacks introduces Clarity, a decidable, not Turing complete, smart contract language. An example of the importance of decidability in the context of smart contracts, is that it is not possible for a Clarity call to run out of gas in the middle of a call. Also, because of its decidability, it is possible to get a complete static analysis of the call graph to get an accurate picture of the cost before execution. Clarity is designed to avoid common pitfalls in smart contract programming such as reentrancy attacks and unpredictable gas fees, which are prevalent in other blockchain ecosystems.
 - **Direct Reward Mechanism**: Through the PoX mechanism, Stacks does not burn the base cryptocurrency (Bitcoin, in this case) to achieve consensus. Instead, it uses these assets to reward participants, thus creating a direct economic linkage between Stacks' operation and Bitcoin's security model. This is a novel approach in blockchain architectures, which typically either use new tokens for rewards.
 
 Stacks introduces several technical innovations:
 
 - **Proof of Transfer (PoX)**: As mentioned, this is a variation of proof-of-burn but designed to recycle the energy and economic expenditure of Bitcoin’s proof-of-work by transferring BTC to support network consensus and smart contract execution on Stacks. This not only secures the network but also aligns the incentives across Bitcoin and Stacks.
-- **Native Integration of Bitcoin Finality**: The operations on Stacks are settled on the Bitcoin blockchain, meaning any operation that modifies the state of the Stacks blockchain (like transactions or smart contract executions) will ultimately be confirmed on Bitcoin. This leverages Bitcoin’s unmatched network security to secure a secondary layer where more complex operations can occur.
+- **Native Integration of Bitcoin Security**: The operations on Stacks are settled on the Bitcoin blockchain, meaning any operation that modifies the state of the Stacks blockchain (like transactions or smart contract executions) will ultimately be confirmed on Bitcoin.
 - **Microblocks and Anchor Blocks**: Stacks employs a new approach to block generation that includes both microblocks and anchor blocks. Microblocks allow for near-instant transaction processing, enhancing the user experience by providing rapid feedback on actions taken on the blockchain. Anchor blocks are produced periodically and include a hash reference to all the preceding microblocks, anchoring them indelibly into the history secured by Bitcoin’s blockchain.
 
 ![2](./2.png)
@@ -38,15 +38,8 @@ Stacks introduces several technical innovations:
 Stacks’ architecture requires users to place trust in several key components:
 
 - **Proof of Transfer (PoX)**: The cornerstone of Stacks' connection to Bitcoin, PoX requires users to trust that the incentive mechanisms and the transfer of Bitcoin to support network functions are executed correctly and securely.
-- **Clarity Smart Contracts**: Given that these contracts are executed exactly as written and are visible on the blockchain, users must trust in the clarity and correctness of the code they interact with. The deterministic nature of Clarity aims to minimize trust by allowing users to predict outcomes reliably.
+- **Clarity Smart Contracts**: Given that these contracts are executed exactly as written and are visible on the blockchain, users must trust in the clarity and correctness of the code they interact with.
 - **Consensus Participants**: While Stacks leverages Bitcoin’s security, it also depends on its own network of miners and Stacking participants (those who lock STX to support network consensus and earn rewards). Unlike Ethereum L2s, withdrawing BTC from Stacks requires signatures from peg-out signers. To fulfill an sBTC withdrawal request, Stackers need to send Bitcoin transactions that pay the requested amount of BTC to the withdrawal address stipulated by the withdrawal request. This means the network’s security is partly contingent upon their honest participation.
-
-**Built-in Security Features**
-
-Stacks incorporates several built-in security mechanisms to protect network integrity and user assets:
-
-- **Bitcoin Finality**: Every Stacks transaction gains the security of Bitcoin’s blockchain through the recording of transaction hashes in Bitcoin’s blocks. This feature means that revising Stacks’ history would require enormous computational power to alter Bitcoin’s history.
-- **Smart Contract Safety with Clarity**: Clarity is designed to prevent many common smart contract vulnerabilities. Its transparency and predictability help prevent unexpected behaviors, which are often exploited in smart contracts on other platforms.
 
 ## **Additional Information**
 
@@ -58,7 +51,7 @@ Stacks uses the Clarity virtual machine for smart contracts. Clarity is not Turi
 
 While Stacks does not compete with high-throughput blockchains like Solana or Ethereum in terms of raw transactions per second, it is designed to scale smart contract execution in a manner that leverages Bitcoin’s security without overloading it. The use of microblocks allows for rapid transaction processing within the constraints of Bitcoin’s block time.
 
-Stacks aims to process transactions faster than Bitcoin, by introducing Fast Blocks in the [Nakamoto Release](https://docs.stacks.co/nakamoto-upgrade/nakamoto-in-10-minutes), however no official data about the actual speed in TPS could be found.
+Stacks aims to process transactions faster than Bitcoin, by introducing Fast Blocks in the [Nakamoto Release](https://docs.stacks.co/nakamoto-upgrade/nakamoto-in-10-minutes). Historically, because Stacks blocks have been anchored 1:1 to Bitcoin blocks, slow block times and transaction times have been one of the biggest pain points for Stacks users and developers. Nakamoto brings significantly faster block times by decoupling Stacks block production from Bitcoin block production. In Nakamoto, new Stacks blocks are produced roughly every 5 seconds. 
 
 ### **Total Value Locked (TVL)**
 
@@ -74,7 +67,6 @@ The Total Value Locked (TVL) in Stacks indicates how much Bitcoin is used in its
 
 **Cons**
 
-- **Complexity and Newness**: The concepts and operations of Stacks, especially PoX, are complex and may present a steep learning curve.
 - **Limited Throughput**: The reliance on Bitcoin’s block times and structure inherently limits transaction throughput compared to other blockchains designed for higher performance.
 
 ## **Protocol Details**
@@ -91,23 +83,7 @@ Clarity can directly access the state of the Bitcoin blockchain through the **`g
 
 **Writing to the Bitcoin Blockchain**
 
-Writing back to the Bitcoin blockchain from Clarity is more complex, addressing the challenge of enabling sophisticated smart contracts and decentralized applications using Bitcoin’s assets without needing a separate blockchain. Currently, Stacks uses a layered approach where operations on Stacks can influence, but not alter, Bitcoin's blockchain. This interaction is powered by the Proof of Transfer (PoX) mechanism, ensuring operations initiated on Stacks are secured by Bitcoin’s robust framework.
-
-### **Proof of Transfer (PoX)**
-
-Proof of Transfer (PoX) is a unique consensus mechanism devised by Stacks to secure its network by utilizing Bitcoin's blockchain. Unlike traditional Proof of Work (PoW) or Proof of Stake (PoS) systems, PoX anchors the Stacks network’s security to the Bitcoin network, not by burning cryptocurrency as in Proof of Burn (PoB) systems, but by transferring Bitcoin to support network functions and reward participants.
-
-In PoX, Stacks miners bid to write a new block by transferring BTC to existing Stacks holders who are participating by locking up their STX tokens, a process known as Stacking. This transfer serves two purposes:
-
-![3](./3.png)
-
-1. It secures network consensus through the economic activities of mining and Stacking.
-2. It redistributes BTC among Stacks token holders, thus incentivizing both miners and token holders to contribute to network security.
-
-**Mining and Reward Distribution**:
-The process begins when a Stacks miner transfers a certain amount of BTC as part of their bid in the mining competition. This BTC is not burned but is instead redistributed to STX holders who have chosen to lock their tokens to support consensus. This mechanism ensures that the miners who are willing to commit financial resources to the network are rewarded with the right to add blocks to the Stacks blockchain, while also rewarding STX holders for participating in the network’s security.
-
-The distribution of rewards and the selection of winning miners are determined through a verifiable random function (VRF), ensuring fairness and transparency in block leader selection. This setup ties Stacks’ block production directly to Bitcoin transactions, leveraging the security and immutability of the Bitcoin blockchain.
+Writing back to the Bitcoin blockchain from Clarity is more complex. Currently, Stacks uses a layered approach where this interactions are powered by the Proof of Transfer (PoX) mechanism, ensuring operations initiated on Stacks are also confirmed in the bitcoin blockchain.
 
 ![4](./4.png)
 
@@ -128,7 +104,7 @@ Clarity is designed with security as a primary concern, incorporating features t
 
 ### **Nakamoto Release**
 
-The Nakamoto Release represents a significant upgrade in the Stacks network, planned as a hard fork to introduce several pivotal enhancements. This release is named after Bitcoin's pseudonymous creator, Satoshi Nakamoto, reflecting its deep roots and alignment with Bitcoin's original principles.
+The Nakamoto Release represents a significant upgrade in the Stacks network, planned as a hard fork to introduce several pivotal enhancements.
 
 **Current Design and Identified Problems**:
 
