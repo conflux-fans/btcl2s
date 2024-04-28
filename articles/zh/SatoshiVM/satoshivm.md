@@ -194,7 +194,7 @@ alpha 主网通过动态隐藏委员会 （DHC）托管资产， DHC 基于 ZKP�
 
 #### 中心化排序器
 
-SatoshiVM的Sequencer是中心化的，所以存在单点故障问题。
+SatoshiVM的Sequencer是中心化的，所以存在节点被攻击、单点故障风险、信任成本和集中化风险等问题。
 
 ## 参考文档
 - [SatoshiVM白皮书](https://github.com/SatoshiVM/whitepaper)
