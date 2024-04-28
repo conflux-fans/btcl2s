@@ -87,9 +87,9 @@ SatoshiVM的Sequencer使用私有内存池，SatoshiVM不会公开交易池中�
 SatoshiVM的核心是Rollup 交易的验证，SatoshiVM 是基于 BitVM 的验证解决方案进行的。并在其基础上进行了一些改进。
 
 ### BitVM
-BitVM 是一种计算范式，用于表达图灵完备的比特币合约。这不需要对比特币网络的共识规则进行任何更改。与在比特币上执行计算不同，它们仅仅是被验证，类似于乐观 Rollup。证明者声明某个给定的函数对某些特定的输入求值得到了特定的输出。如果该声明是错误的，那么验证者可以进行简明的欺诈证明并惩罚证明者。使用这种机制，任何可计算的函数都可以在比特币上进行验证。
+BitVM 是由 ZeroSync 核心贡献者 Robin Linus 提出的，并于 2023 年 10 月 9 日 发布了[白皮书]((https://bitvm.org/bitvm.pdf))。
 
-BitVM的详细介绍可以参看[BitVM白皮书](https://bitvm.org/bitvm.pdf)
+BitVM 是一种计算范式，用于表达图灵完备的比特币合约。这不需要对比特币网络的共识规则进行任何更改。与在比特币上执行计算不同，它们仅仅是被验证，类似于乐观 Rollup。证明者声明某个给定的函数对某些特定的输入求值得到了特定的输出。如果该声明是错误的，那么验证者可以进行简明的欺诈证明并惩罚证明者。使用这种机制，任何可计算的函数都可以在比特币上进行验证。
 
 #### BitVM 电路
 
@@ -181,13 +181,13 @@ alpha 主网通过动态隐藏委员会 （DHC）托管资产， DHC 基于 ZKP�
 ## 优缺点
 
 ### 优点
-验证阶段采用了非交互式验证方式，使得比 bitvm 验证时间更短；
-> 实现难度？是否更安全？
+相比 RGB++、 BEVM 实现了可验证的 Layer2，验证阶段采用了非交互式验证方式，使得比 bitvm 验证时间更短；
+<!-- > 实现难度？是否更安全？ -->
 
 ### 缺点（或挑战）
 
 #### DA层
-[官方文档](https://docs.satoshivm.io/satoshivm/layer2-overview/architecture/mainnet) 中表示 主网会将 BTC 链作为 DA层，这在以太坊 L2解决方案中也没有先例，将 BTC 链作为 DA 层将导致 L2的 TPS 的上限不会大于 L1；而且会付出昂贵的 GAS 成本，也就失去了L2的意义，不知是否官方没有表述清楚。
+[官方文档](https://docs.satoshivm.io/satoshivm/layer2-overview/architecture/mainnet) 中表示 主网会将 BTC 链作为 DA层，这在以太坊 L2解决方案中也没有先例，将 BTC 链作为 DA 层将导致 L2的 TPS 受限于 L1 的数据容量；而且会付出昂贵的 GAS 成本，不知是否官方没有表述清楚。
 
 - 其中Rollup 节点的可用性依赖于从 BTC 网络获取交易数据
 
