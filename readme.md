@@ -9,5 +9,5 @@ The research focus of the first phase is BTC L2.
 | Name  |  English | Chinese |
 |---|---| --- |
 | RGB and RGB++  | [Link](./articles/en/RGB/rgb-and-rgb-plusplus.md)  | [链接](./articles/zh/RGB/rgb-and-plusplus.md)|
-| BEVM  |   | [链接](./articles/BEVM/zh/bevm.md) |
+| BEVM  |  [Link](./articles/bevm/en/bevm.md) | [链接](./articles/bevm/zh/bevm.md) |
 | Lightning Network  |   | [链接](./articles/zh/lightning/lightning-netwok.md) |
