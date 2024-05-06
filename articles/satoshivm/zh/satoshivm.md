@@ -1,9 +1,9 @@
 # SatashiVM
 
 ## 介绍
-本文主要用通俗易懂的方式介绍 SatoshiVM 的基本情况，以及技术架构和工作原理。
+本文主要介绍 SatoshiVM 的基本情况，以及技术架构和工作原理。
 ## 概要
-SatoshiVM 是一个分布式的比特币 ZK Rollup 第二层解决方案，与以太坊虚拟机（EVM）生态系统兼容，使用原生 BTC 作为燃料。由于兼容EVM，使得比特币具备了使用EVM功能的能力，使比特币生态系统能够发行资产和开发EVM支持的应用程序，为新生态系统的演进带来很多可能性。
+SatoshiVM 是一个分布式的比特币 ZK Rollup 第二层解决方案，与以太坊虚拟机（EVM）生态系统兼容，使用原生 BTC 作为燃料。由于兼容EVM，SatoshiVM使得比特币具备了使用EVM功能的能力，并能够发行资产和开发EVM支持的应用程序，为新生态系统的演进带来很多可能性。
 
 SataoshiVM主网上线分两个阶段：alpha 主网和 主网，其中 alpha 主网已于 2024 年 3.15日 上线 ，defillama 显示当前 tvl 为 1.37m。主网计划在 2024 年 Q4 上线。
 ## 协议速览
@@ -19,7 +19,7 @@ SatoshiVM 具有以下技术特点：
 
 
 ### 架构
-![alt text](architecture.EeDXQcIU.svg)
+![alt text](../architecture.EeDXQcIU.svg)
 
 SatoshiVM 链由三个层组成：
 
@@ -114,16 +114,16 @@ BitVM 是一种计算范式，用于表达图灵完备的比特币合约。这�
 
 
 
-![alt text](image-3.png)
+![alt text](../image-3.png)
 
-实现如下：
-![alt text](image-11.png)
+脚本表示如下：
+![alt text](../image-11.png)
 
 ##### 逻辑门承诺
 
 任何可计算的函数都可以表示为布尔电路。NAND 门是一种通用逻辑门，因此任何布尔函数都可以由它们组成。NAND 门承诺包含两个表示两个输入的位承诺和一个表示输出的位承诺，脚本计算两个输入的 NAND 值，以确保它与承诺的输出位匹配。
 
-![alt text](image-10.png)
+![alt text](../image-10.png)
 
 
 ##### 二进制电路承诺
@@ -131,10 +131,10 @@ BitVM 是一种计算范式，用于表达图灵完备的比特币合约。这�
 bitvm 将 逻辑门承诺 Merkel 化，然后将 Merkel Root 称为 Binary Circuit Commitment。
 
 假如有二进制电路如下：
-![alt text](image-4.png)
+![alt text](../image-4.png)
 
 则二进制电路承诺就是根据每个逻辑门创建的 Merkel Root
-![alt text](image-5.png)
+![alt text](../image-5.png)
 
 #### 挑战与响应
 
@@ -144,14 +144,14 @@ bitvm 将 位值承诺树 Root 发布为 Bit Commitments Taproot UTXO, 将 二�
 
 当争议发生时，挑战者在BTC链上声明，自己要挑战证明者发布的哪个 Binary Circuit Commitment Taproot，然后要求证明者揭示Root对应的某段数据。之后，证明者出示默克尔证明，通过二分法的方式反复在链上披露Merkel树的小部分数据片段，直到和挑战者共同定位到有争议的逻辑门电路。
 
-![alt text](image-8.png)
+![alt text](../image-8.png)
 
 ### SataoshiVM 电路
 SataoshiVM 基于 BitVM方案。SatoshiVM 采用 Bristol format 来表达其逻辑门电路结构。
 
 BitVM 中的 Binary Circuit Commitment Taproot 在 SatoshiVM 中称为 verification taproot
 
-![alt text](image-7.png)
+![alt text](../image-7.png)
 
 ### SataoshiVM 证明挑战
 SataoshiVM的证明挑战方式与BitVM不同，SatoshiVM显著简化了“多轮交互以确认哪一小块数据有问题”的过程，只需要一轮交互即可完成验证过程。在BitVM和任意中，这个过程可能持续几个小时。
@@ -175,7 +175,7 @@ alpha 主网通过动态隐藏委员会 （DHC）托管资产， DHC 基于 ZKP�
 <!-- ## 疑问
 1. 前像承诺
 前像承诺中给出的例子如下，文中说到通过 “hash of value” 和 "hash of output" 就可以隐藏原值，但是对于门电路，输入输出只有 0 跟 1 两种值，所以不能达到隐藏原值的效果。这里想要表达的应该是 BitVM 中提到的 Bit commitment 中的 preimage
-![alt text](image-2.png)
+![alt text](../image-2.png)
 
 1.  -->
 
