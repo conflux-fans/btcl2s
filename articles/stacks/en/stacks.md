@@ -22,7 +22,7 @@ Every Stacks block is tethered to a Bitcoin transaction; a hash of the Stacks bl
 
 The Stacks blockchain distinguishes itself from other Bitcoin Scaling Solutions with some key differentiators:
 
-- **Clarity Smart Contract Language**: Stacks introduces Clarity, a decidable, not Turing complete, smart contract language. An example of the importance of decidability in the context of smart contracts, is that it is not possible for a Clarity call to run out of gas in the middle of a call. Also, because of its decidability, it is possible to get a complete static analysis of the call graph to get an accurate picture of the cost before execution. Clarity is designed to avoid common pitfalls in smart contract programming such as reentrancy attacks and unpredictable gas fees, which are prevalent in other blockchain ecosystems.
+- **Clarity Smart Contract Language**: Stacks introduces Clarity, a decidable, not Turing complete, smart contract language. An example of the importance of decidability in the context of smart contracts, is that it is not possible for a Clarity call to run out of gas in the middle of a call. Also, because of its decidability, it is possible to get a complete static analysis of the call graph before execution. Clarity is designed to avoid common pitfalls in smart contract programming such as reentrancy attacks and unpredictable gas fees, which are prevalent in other blockchain ecosystems.
 - **Direct Reward Mechanism**: Through the PoX mechanism, Stacks creates a direct economic linkage between Stacks' operation and Bitcoin's security model. This is a novel approach in blockchain architectures, which typically either use new tokens for rewards.
 
 Stacks introduces several technical innovations:
@@ -37,7 +37,7 @@ Stacks introduces several technical innovations:
 
 Stacks’ architecture requires users to place trust in several key components:
 
-- **Proof of Transfer (PoX)**: The cornerstone of Stacks' connection to Bitcoin, PoX requires users to trust that the incentive mechanisms and the transfer of Bitcoin to support network functions are executed correctly and securely.
+- **Proof of Transfer (PoX) Consensus**: The cornerstone of Stacks' connection to Bitcoin, PoX requires users to trust that the incentive mechanisms and the transfer of Bitcoin to support network functions are executed correctly and securely.
 - **Clarity Smart Contracts**: Given that these contracts are executed exactly as written and are visible on the blockchain, users must trust in the clarity and correctness of the code they interact with.
 - **Consensus Participants**: While Stacks leverages Bitcoin’s security, it also depends on its own network of miners and Stacking participants (those who lock STX to support network consensus and earn rewards). Unlike Ethereum L2s, withdrawing BTC from Stacks requires signatures from peg-out signers. To fulfill an sBTC withdrawal request, Stackers need to send Bitcoin transactions that pay the requested amount of BTC to the withdrawal address stipulated by the withdrawal request. This means the network’s security is partly contingent upon their honest participation.
 
