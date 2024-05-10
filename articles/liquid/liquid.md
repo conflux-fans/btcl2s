@@ -37,55 +37,24 @@ At its core, the Liquid Network facilitates faster and more private transactions
 **Asset Issuance Platform**: Beyond transacting in Bitcoin, Liquid provides functionalities for issuing a variety of digital assets. These assets can represent real-world entities like fiat currencies or securities, or they can be entirely digital creations such as tokens for specific ecosystems. The issuance process is integrated with Liquid’s privacy features, allowing issuers to maintain confidentiality over the operations while enabling the broad utility of these assets across the network.
 
 ## **Trust & Security**
+The security framework of the Liquid Network, while bolstering its functionality and performance compared to the traditional Bitcoin blockchain, introduces unique trust dependencies and potential vulnerabilities. This section evaluates these elements critically, examining the implications of potential breakdowns and how they influence the overall integrity and reliability of the network.
 
-Liquid Network, while offering enhanced functionality and performance over the Bitcoin blockchain, necessitates a degree of trust in various components and entities. This trust is balanced by a comprehensive suite of security measures designed to safeguard the network and its participants.
+### **Trust Dependencies**
 
-### **Trust Components**
+1. **Federated Consensus Model**: Liquid’s federated consensus hinges on a pre-selected group of functionaries, which shifts trust from a decentralized model to a more centralized one. While this allows for faster transaction confirmations and improved privacy through Confidential Transactions, it also means that the network's security is heavily reliant on the integrity and reliability of these functionaries. If the functionaries were to act maliciously or if their systems were compromised, it could lead to manipulated transactions or loss of funds.
+2. **Functionaries as Block Signers and Watchmen**:
+    - **Block Signers**: The entire network trusts these functionaries to propose and sign blocks faithfully. If this trust is misplaced—through internal fraud or external hacking—transactions might be falsely validated or denied, impacting the network's reliability and users' assets.
+    - **Watchmen**: They manage the crucial two-way peg that allows BTC to be transferred in and out of the Liquid Network. A failure here, such as improper handling or theft of the pegged BTC, would directly threaten users' assets and could severely undermine trust in the platform's security.
+3. **Key Storage Modules**: The security of cryptographic keys is paramount as they underpin all transaction validations on the network. Any breach in these modules could potentially allow unauthorized access to sign transactions or alter the network operations.
+4. **Emergency Recovery Procedure**: Trust is also placed in the network's ability to execute emergency procedures effectively in the event of significant disruptions. Failure in these protocols could result in the irrevocable loss of user funds.
 
-**1. Federated Consensus Model**: Unlike decentralized blockchains like Bitcoin, Liquid operates under a federated consensus model, requiring users to place trust in the federation of functionaries. These functionaries, selected from among reputable financial and technological institutions, are responsible for validating transactions and creating blocks.
+### **Analyzing Security Features and Potential Breakdowns**
 
-**2. Functionaries as Block Signers and Watchmen**:
-
-- **Block Signers**: Users must trust that these functionaries will act honestly and efficiently in proposing and signing blocks within the agreed-upon one-minute intervals.
-- **Watchmen**: Responsible for managing the two-way peg that allows the transfer of BTC to and from Liquid. Users must trust them to securely handle these conversions and to safeguard the locked BTC.
-
-**3. Multi-Sig Wallets and Timelocks**: Liquid’s security model requires trust in the implementation and management of multisig wallets and timelocks that control the release of funds. These mechanisms need to operate correctly to prevent unauthorized access and ensure the proper execution of emergency recovery procedures.
-
-**4. Key Storage Modules** The integrity of the Key Storage Modules crucial as they store critical cryptographic keys used by functionaries to sign transactions. Trust is placed in the physical and operational security of these devices.
-
-**5. Emergency Recovery Procedure**: In the event of a significant portion of the network going offline, users must trust in the predefined emergency procedures designed to recover the network and secure the funds.
-
-### **Key Security Features**
-
-**1. Confidential Transactions**:
-
-- Liquid uses Confidential Transactions to enhance privacy by obscuring transaction amounts and asset types from public view, while still allowing for network validation.
-
-**2. Strong Federation**:
-
-- A tightly controlled group of functionaries, known as a Strong Federation, mitigates the risks of double-spending and ensures rapid transaction processing and finality.
-
-**3. Multisig Wallets with Timelocks**:
-
-- Multisig wallets add an extra layer of security, requiring multiple functionaries to agree on transaction validity. Timelocks ensure that even if a significant number of functionaries were compromised, the network could still recover.
-
-**4. Federated Block Signing**:
-
-- Blocks are signed by functionaries using a round-robin mechanism, which provides resistance against fraud or collusion among a minority of participants.
-
-**5. Key Storage Modules**:
-
-- All cryptographic operations are processed using Key Storage Modules, ensuring that private keys do not leave the device and are not exposed to potential online threats.
-
-**6. Network Resilience and Failover Protocols**:
-
-- The network is designed to be resilient, with protocols in place to handle the failure of one or more functionaries without halting network operations. This includes the ability to continue operations as long as two-thirds of the functionaries are operational.
-
-**7. Emergency Recovery Keys**:
-
-- In case the network stalls due to a major disruption, a set of emergency keys activated by a timelock can recover the network, ensuring that the funds remain accessible.
-
-While the Liquid Network introduces several points of trust not present in fully decentralized blockchains, these are counterbalanced by robust, multi-layered security measures. These features are designed to protect user assets, maintain privacy, and ensure the integrity and continuity of the network under a variety of scenarios. 
+1. **Confidential Transactions**: While these transactions provide privacy, the obscured data could complicate the auditing process, potentially leading to unnoticed fraudulent activities until they become significant. Moreover, if the cryptographic methods securing these transactions were compromised, it could expose sensitive transaction details to malicious actors.
+2. **Strong Federation**: The security model relies on the robustness of the Strong Federation. A breakdown in this federation, such as collusion among a subset of functionaries, could lead to double-spending or other fraudulent activities. Additionally, since the federation is less distributed than Bitcoin’s network, it presents a more attractive target for centralized attacks.
+3. **Multisig Wallets with Timelocks**: These add layers of security by requiring multiple approvals for transactions and delaying potential unauthorized withdrawals. However, if multiple functionaries were simultaneously compromised, the timelocks could delay response times, complicating efforts to swiftly secure the network.
+4. **Network Resilience and Failover Protocols**: Although designed for robustness, the network's failover protocols depend on at least two-thirds of functionaries remaining operational. A coordinated attack that disables a significant portion of these nodes could halt network operations, leading to transaction delays or even a temporary shutdown.
+5. **Emergency Recovery Keys**: These are intended as a last resort to recover the network and funds. However, reliance on a centralized set of backup keys introduces risks of those keys being stolen or misused, potentially leading to unauthorized access to the network.
 
 ## **Additional Information**
 
