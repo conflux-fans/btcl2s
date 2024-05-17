@@ -28,65 +28,10 @@ At its core, the Liquid Network facilitates faster and more private transactions
 
 **Confidential Transactions**: Liquid introduces privacy as a core component of its architecture. Through Confidential Transactions, transaction amounts and asset types are obscured, providing privacy for financial transactions while still maintaining the ability to audit and verify transfers securely. This feature is particularly appealing to institutions and individuals seeking privacy without sacrificing transparency.
 
-### **Technical Innovations**
-
-**Liquid’s Two-Way Peg**: The pegging mechanism used by Liquid allows for secure and verifiable movement of Bitcoin between the Bitcoin blockchain and the Liquid sidechain. This peg is crucial for maintaining a trustless exchange environment where users can move assets across blockchains without reliance on intermediary transfer services.
-
-**Speed and Finality**: The network’s design emphasizes speed and reliability. Transactions on Liquid can achieve final settlement within two minutes, a significant improvement over Bitcoin. This is made possible through the streamlined block generation process managed by the functionaries, ensuring that transactions are processed swiftly and without the delays associated with mining on Bitcoin.
-
-**Asset Issuance Platform**: Beyond transacting in Bitcoin, Liquid provides functionalities for issuing a variety of digital assets. These assets can represent real-world entities like fiat currencies or securities, or they can be entirely digital creations such as tokens for specific ecosystems. The issuance process is integrated with Liquid’s privacy features, allowing issuers to maintain confidentiality over the operations while enabling the broad utility of these assets across the network.
-
-## **Trust & Security**
-The security framework of the Liquid Network, while bolstering its functionality and performance compared to the traditional Bitcoin blockchain, introduces unique trust dependencies and potential vulnerabilities. This section evaluates these elements critically, examining the implications of potential breakdowns and how they influence the overall integrity and reliability of the network.
-
-### **Trust Dependencies**
-
-1. **Federated Consensus Model**: Liquid’s federated consensus hinges on a pre-selected group of functionaries, which shifts trust from a decentralized model to a more centralized one. While this allows for faster transaction confirmations and improved privacy through Confidential Transactions, it also means that the network's security is heavily reliant on the integrity and reliability of these functionaries. If the functionaries were to act maliciously or if their systems were compromised, it could lead to manipulated transactions or loss of funds.
-2. **Functionaries as Block Signers and Watchmen**:
+**Functionaries as Block Signers and Watchmen**:
     - **Block Signers**: The entire network trusts these functionaries to propose and sign blocks faithfully. If this trust is misplaced—through internal fraud or external hacking—transactions might be falsely validated or denied, impacting the network's reliability and users' assets.
     - **Watchmen**: They manage the crucial two-way peg that allows BTC to be transferred in and out of the Liquid Network. A failure here, such as improper handling or theft of the pegged BTC, would directly threaten users' assets and could severely undermine trust in the platform's security.
-3. **Key Storage Modules**: The security of cryptographic keys is paramount as they underpin all transaction validations on the network. Any breach in these modules could potentially allow unauthorized access to sign transactions or alter the network operations.
-4. **Emergency Recovery Procedure**: Trust is also placed in the network's ability to execute emergency procedures effectively in the event of significant disruptions. Failure in these protocols could result in the irrevocable loss of user funds.
 
-### **Analyzing Security Features and Potential Breakdowns**
-
-1. **Confidential Transactions**: While these transactions provide privacy, the obscured data could complicate the auditing process, potentially leading to unnoticed fraudulent activities until they become significant. Moreover, if the cryptographic methods securing these transactions were compromised, it could expose sensitive transaction details to malicious actors.
-2. **Strong Federation**: The security model relies on the robustness of the Strong Federation. A breakdown in this federation, such as collusion among a subset of functionaries, could lead to double-spending or other fraudulent activities. Additionally, since the federation is less distributed than Bitcoin’s network, it presents a more attractive target for centralized attacks.
-3. **Multisig Wallets with Timelocks**: These add layers of security by requiring multiple approvals for transactions and delaying potential unauthorized withdrawals. However, if multiple functionaries were simultaneously compromised, the timelocks could delay response times, complicating efforts to swiftly secure the network.
-4. **Network Resilience and Failover Protocols**: Although designed for robustness, the network's failover protocols depend on at least two-thirds of functionaries remaining operational. A coordinated attack that disables a significant portion of these nodes could halt network operations, leading to transaction delays or even a temporary shutdown.
-5. **Emergency Recovery Keys**: These are intended as a last resort to recover the network and funds. However, reliance on a centralized set of backup keys introduces risks of those keys being stolen or misused, potentially leading to unauthorized access to the network.
-
-## **Additional Information**
-
-### **Virtual Machine**
-
-Liquid does not employ a traditional virtual machine but uses a scriptable platform similar to Bitcoin for asset issuance and transfer, focusing on performance and security.
-
-### **Scalability**
-
-Liquid can process transactions faster than the Bitcoin network, with block times set at one minute and transaction finality achieved within two minutes under normal conditions.
-
-### **Total Value Locked**
-
-The Total Value Locked (TVL) in Liquid Network indicates how much Bitcoin was deposited. The actual TVL is of approximately [3855 BTC](https://l2.watch/bitcoin/) ($255M) showing the amount of assets engaged in the Liquid Network.
-
-## **Pros and Cons**
-
-### **Pros**
-
-- **Speed**: Transactions are finalized within two minutes, significantly faster than Bitcoin.
-- **Privacy**: Confidential Transactions ensure transaction amounts and asset types are hidden, enhancing user privacy.
-- **Interoperability**: Supports multiple asset types and enables seamless transfers within its ecosystem.
-
-### **Cons**
-
-- **Centralization Risks**: The reliance on a federation for consensus might introduce risks of central control and potential failure points.
-- **Complexity**: The dual-token system and the concept of functionaries can be complex for new users.
-- **Limited Throughput**: Despite its improvements over Bitcoin, Liquid's transaction throughput may not match that of major centralized payment processors.
-
-## **Protocol Details of Liquid Network**
-
-This section delves deeper into the architectural nuances and technical mechanisms that underpin Liquid's functionality, illustrating how it differentiates itself from both Bitcoin and other blockchain solutions.
 
 ### **Integration with Bitcoin**
 
@@ -128,6 +73,51 @@ One of the hallmark features of Liquid is its support for Confidential Transacti
 **Emergency Recovery Procedure**: In the event of a catastrophic network failure where one-third or more of the functionaries are offline, Liquid incorporates an emergency recovery procedure using a set of backup keys held by a trusted third party. This measure ensures that funds can be recovered and the network can be restored even in extreme scenarios.
 
 **Dynamic Federation Management**: The federation can be dynamically adjusted, with new functionaries being added or removed as needed to adapt to changing security requirements or to expand the network’s capabilities.
+
+## **Trust & Security**
+The security framework of the Liquid Network, while bolstering its functionality and performance compared to the traditional Bitcoin blockchain, introduces unique trust dependencies and potential vulnerabilities. This section evaluates these elements critically, examining the implications of potential breakdowns and how they influence the overall integrity and reliability of the network.
+
+### **Trust Dependencies**
+
+1. **Federated Consensus Model**: Liquid’s federated consensus hinges on a pre-selected group of functionaries, which shifts trust from a decentralized model to a more centralized one. While this allows for faster transaction confirmations and improved privacy through Confidential Transactions, it also means that the network's security is heavily reliant on the integrity and reliability of these functionaries. If the functionaries were to act maliciously or if their systems were compromised, it could lead to manipulated transactions or loss of funds.
+2. **Key Storage Modules**: The security of cryptographic keys is paramount as they underpin all transaction validations on the network. Any breach in these modules could potentially allow unauthorized access to sign transactions or alter the network operations.
+3. **Emergency Recovery Procedure**: Trust is also placed in the network's ability to execute emergency procedures effectively in the event of significant disruptions. Failure in these protocols could result in the irrevocable loss of user funds.
+
+### **Analyzing Security Features and Potential Breakdowns**
+
+1. **Strong Federation**: The security model relies on the robustness of the Strong Federation. A breakdown in this federation, such as collusion among a subset of functionaries, could lead to double-spending or other fraudulent activities. Additionally, since the federation is less distributed than Bitcoin’s network, it presents a more attractive target for centralized attacks.
+2. **Confidential Transactions**: While these transactions provide privacy, the obscured data could complicate the auditing process, potentially leading to unnoticed fraudulent activities until they become significant. Moreover, if the cryptographic methods securing these transactions were compromised, it could expose sensitive transaction details to malicious actors.
+3. **Multisig Wallets with Timelocks**: These add layers of security by requiring multiple approvals for transactions and delaying potential unauthorized withdrawals. However, if multiple functionaries were simultaneously compromised, the timelocks could delay response times, complicating efforts to swiftly secure the network.
+4. **Network Resilience and Failover Protocols**: Although designed for robustness, the network's failover protocols depend on at least two-thirds of functionaries remaining operational. A coordinated attack that disables a significant portion of these nodes could halt network operations, leading to transaction delays or even a temporary shutdown.
+5. **Emergency Recovery Keys**: These are intended as a last resort to recover the network and funds. However, reliance on a centralized set of backup keys introduces risks of those keys being stolen or misused, potentially leading to unauthorized access to the network.
+
+## **Additional Information**
+
+### **Virtual Machine**
+
+Liquid does not employ a traditional virtual machine but uses a scriptable platform similar to Bitcoin for asset issuance and transfer, focusing on performance and security.
+
+### **Scalability**
+
+Liquid can process transactions faster than the Bitcoin network, with block times set at one minute and transaction finality achieved within two minutes under normal conditions.
+
+### **Total Value Locked**
+
+The Total Value Locked (TVL) in Liquid Network indicates how much Bitcoin was deposited. The actual TVL is of approximately [3855 BTC](https://l2.watch/bitcoin/) ($255M) showing the amount of assets engaged in the Liquid Network.
+
+## **Pros and Cons**
+
+### **Pros**
+
+- **Speed**: Transactions are finalized within two minutes, significantly faster than Bitcoin.
+- **Privacy**: Confidential Transactions ensure transaction amounts and asset types are hidden, enhancing user privacy.
+- **Interoperability**: Supports multiple asset types and enables seamless transfers within its ecosystem.
+
+### **Cons**
+
+- **Centralization Risks**: The reliance on a federation for consensus might introduce risks of central control and potential failure points.
+- **Complexity**: The dual-token system and the concept of functionaries can be complex for new users.
+- **Limited Throughput**: Despite its improvements over Bitcoin, Liquid's transaction throughput may not match that of major centralized payment processors.
 
 ## **References**
 
