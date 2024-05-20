@@ -22,16 +22,14 @@ The Liquid Network was specifically designed as a sidechain to Bitcoin that aims
 
 At its core, the Liquid Network facilitates faster and more private transactions through a sidechain mechanism linked directly to the Bitcoin blockchain. Users can transfer Bitcoin into the Liquid Network using a two-way peg, which converts BTC to Liquid Bitcoin (L-BTC) at a 1:1 ratio. This conversion enables the use of L-BTC across Liquid’s ecosystem with all transactions benefiting from the sidechain’s enhanced features like rapid settlement times and increased privacy.
 
-### **Key Differentiators**
+### **Federated Consensus Model**
 
-**Federated Consensus**: Unlike Bitcoin’s decentralized proof-of-work system, Liquid utilizes a federated consensus model managed by a consortium of trusted functionaries. These functionaries are responsible for maintaining the network’s integrity and security. This model allows for consistent block times and immediate transaction finality, reducing the typical wait times associated with Bitcoin’s block confirmations.
+Liquid departs from Bitcoin's Proof of Work (PoW) consensus mechanism, adopting a federated model known as a Strong Federation. This model is central to Liquid’s operations, involving a group of functionaries—vetted and authorized entities such as exchanges and financial institutions—that are geographically distributed. These functionaries perform two critical roles:
 
-**Confidential Transactions**: Liquid introduces privacy as a core component of its architecture. Through Confidential Transactions, transaction amounts and asset types are obscured, providing privacy for financial transactions while still maintaining the ability to audit and verify transfers securely. This feature is particularly appealing to institutions and individuals seeking privacy without sacrificing transparency.
+1. **Block Signers**: Functionaries participate in block creation, proposing and signing blocks every minute. This regular interval contrasts with Bitcoin’s variable block time and helps achieve faster settlement times on Liquid.
+2. **Watchmen**: This role involves overseeing the pegged BTC, managing peg-in and peg-out processes, and ensuring that the two-way peg remains secure and verifiable.
 
-**Functionaries as Block Signers and Watchmen**:
-    - **Block Signers**: The entire network trusts these functionaries to propose and sign blocks faithfully. If this trust is misplaced—through internal fraud or external hacking—transactions might be falsely validated or denied, impacting the network's reliability and users' assets.
-    - **Watchmen**: They manage the crucial two-way peg that allows BTC to be transferred in and out of the Liquid Network. A failure here, such as improper handling or theft of the pegged BTC, would directly threaten users' assets and could severely undermine trust in the platform's security.
-
+The federated model ensures that no single entity controls the network while providing the necessary speed and security for institutional-grade transactions.
 
 ### **Integration with Bitcoin**
 
@@ -46,15 +44,6 @@ Liquid operates as a sidechain to Bitcoin, which means it functions in parallel 
 - **Peg-out**: The reverse process involves converting L-BTC back to BTC. This requires a quorum of functionaries to sign off on the transaction, providing an additional layer of security before the BTC is released back to the user on the Bitcoin blockchain.
 
 ![l3](./img/l3.png)
-
-### **Federated Consensus Model**
-
-Liquid departs from Bitcoin's Proof of Work (PoW) consensus mechanism, adopting a federated model known as a Strong Federation. This model is central to Liquid’s operations, involving a group of functionaries—vetted and authorized entities such as exchanges and financial institutions—that are geographically distributed. These functionaries perform two critical roles:
-
-1. **Block Signers**: Functionaries participate in block creation, proposing and signing blocks every minute. This regular interval contrasts with Bitcoin’s variable block time and helps achieve faster settlement times on Liquid.
-2. **Watchmen**: This role involves overseeing the pegged BTC, managing peg-in and peg-out processes, and ensuring that the two-way peg remains secure and verifiable.
-
-The federated model ensures that no single entity controls the network while providing the necessary speed and security for institutional-grade transactions.
 
 ### **Confidential Transactions and Asset Issuance**
 
