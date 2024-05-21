@@ -96,16 +96,7 @@ The Total Value Locked (TVL) in Liquid Network indicates how much Bitcoin was de
 
 ## **Pros and Cons**
 
-### **Pros**
-
-- **Speed**: Transactions are finalized within two minutes, significantly faster than Bitcoin.
-- **Privacy**: Confidential Transactions ensure transaction amounts and asset types are hidden, enhancing user privacy.
-- **Interoperability**: Supports multiple asset types and enables seamless transfers within its ecosystem.
-
-### **Cons**
-
-- **Centralization Risks**: The reliance on a federation for consensus might introduce risks of central control and potential failure points.
-- **Limited Throughput**: Despite its improvements over Bitcoin, Liquid's transaction throughput may not match that of major centralized payment processors.
+By comparing Liquid with other BTC scaling solutions, privacy can be highlighted as one of its main advantages. Liquid's confidential transactions can ensure transaction amounts and asset types are hidden, enhancing user privacy. On the other hand, the reliance on a federation for consensus might introduce risks of central control and potential failure points.
 
 ## **References**
 
