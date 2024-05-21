@@ -105,7 +105,6 @@ The Total Value Locked (TVL) in Liquid Network indicates how much Bitcoin was de
 ### **Cons**
 
 - **Centralization Risks**: The reliance on a federation for consensus might introduce risks of central control and potential failure points.
-- **Complexity**: The dual-token system and the concept of functionaries can be complex for new users.
 - **Limited Throughput**: Despite its improvements over Bitcoin, Liquid's transaction throughput may not match that of major centralized payment processors.
 
 ## **References**
